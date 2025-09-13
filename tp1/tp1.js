@@ -1,3 +1,5 @@
+// link de youtube: https://youtu.be/Tlb8G0CgOnshttps://youtu.be/Tlb8G0CgOns
+
 var ancho = 50;
 var largo;
 var estado = 0; // 0: original, 1: círculo mediano, 2: círculo grande, 3: invertir colores
@@ -121,3 +123,4 @@ function obtenerTamañoCirculoFondo (estadoActual){
 if (estadoActual == 0 || estadoActual == 2) return 4;
 else return 7
 }
+
