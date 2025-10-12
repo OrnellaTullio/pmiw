@@ -1,339 +1,103 @@
-// Se declara una variable para cada imagen
-let sec1;
-let sec2;
-let secTrixie1;
-let secTrixie2 ;
-let secTrixie3;
-let secTrixie4;
-let secTrixie5;
-let secCañon;
-let secPubl;
-let secQuime;
-let secTp;
-let FinalTrixie;
-let biblioteca;
-let txtTwi;
-let txtInicio ;
-let flecha;
-let fleActiva;
-let txtTrixie;
 let estadoActual = 'pan1';
-// 1. CARGA DE RECURSOS
+let flecha, fleActiva;
+let imagenes = [];
+let textos = [];
+let explosion, tension, ambiente, magia;
+let isAmbientePlaying = false;
+
 function preload() {
-  // Cargamos cada imagen en su propia variable
+  // Sonidos
+  explosion = loadSound('data/explosion.mp3');
+  tension = loadSound('data/musica_ tension.mp3');
+  ambiente = loadSound('data/happy_song1.mp3');
+  magia = loadSound('data/ruido_magia.mp3');
+
+  // Imágenes base
   fleActiva = loadImage('data/FlechaAct.png');
   flecha = loadImage('data/flechaInac.png');
-  sec1= loadImage('data/PANTALLA1.png');
-  sec2 = loadImage('data/PANTALLA2.png');
-  secTrixie1 = loadImage('data/PANTALLA3.png');
-  secTrixie2 = loadImage('data/PANTALLA4.png');
-  secTrixie3 = loadImage('data/PANTALLA5.png');
-  secTrixie4  = loadImage('data/twi_habla_con_Star.png');
-  secCañon= loadImage('data/Cañon.png');
-  secPubl = loadImage('data/publico.png');
-  secQuime = loadImage('data/quimera.png');
-  secTp = loadImage('data/GE1.png');
-  FinalTrixie  = loadImage('data/GE2.png');
-  biblioteca = loadImage('data/biblioteca.jpg');
-  txtInicio = loadStrings ('data/diaInicio.txt');
-  txtTrixie = loadStrings ('data/txtTrixie.txt');
-  txtTwi = loadStrings ('data/txtTwi.txt');
+
+  imagenes = [
+    loadImage('data/PANTALLA1.png'),      // 0
+    loadImage('data/PANTALLA2.png'),      // 1
+    loadImage('data/PANTALLA3.png'),      // 2
+    loadImage('data/PANTALLA4.png'),      // 3
+    loadImage('data/PANTALLA5.png'),      // 4
+    loadImage('data/twi_habla_con_Star.png'), // 5
+    loadImage('data/Cañon.png'),          // 6
+    loadImage('data/publico.png'),        // 7
+    loadImage('data/quimera.png'),        // 8
+    loadImage('data/GE1.png'),            // 9
+    loadImage('data/GE2.png'),            // 10
+    loadImage('data/biblioteca.jpg'),     // 11
+    loadImage('data/PANTALLA7.png'),      // 12
+    loadImage('data/PANTALLA8.jpg'),      // 13
+    // Nuevas imágenes (14 a 19)
+    loadImage('data/no_puede_terminar.png'), // 14
+    loadImage('data/final_malo.png'),        // 15
+    loadImage('data/final_verdadero1.png'),  // 16
+    loadImage('data/final_verdadero2.png'),  // 17
+    loadImage('data/final_verdadero3.png'),  // 18
+    loadImage('data/final_verdadero4.png')   // 19
+  ];
+
+  textos = [
+    loadStrings('data/diaInicio.txt'),    // 0
+    loadStrings('data/txtTrixie.txt'),    // 1
+    loadStrings('data/txtTwi.txt'),       // 2
+    loadStrings('data/txtFlutter.txt'),   // 3
+    loadStrings('data/txtRainbow.txt')    // 4
+  ];
 }
 
-// 2. CONFIGURACIÓN INICIAL
 function setup() {
   createCanvas(640, 480);
   textSize(22);
-  textFont('Georgia');
+  textFont('Candara');
+  textAlign(CENTER, CENTER);
 }
 
-// 3. BUCLE PRINCIPAL DE DIBUJO
 function draw() {
   if (estadoActual === 'pan1') {
-    // Usamos la variable de imagen directamente
-    image(sec1, 0, 0, width, height);
-    fill(0, 0, 0, 150);
-    rect(20, height/6 , width - 40, 320, 10);
-    fill(255);
-    text(txtInicio[0],100, height/4 , 480);
-    botonparacontinuar (520, 20);
-
+    drawPan1();
   } else if (estadoActual === 'pan2') {
-    image(sec2, 0, 0, width, height);
-    fill(0, 0, 0, 150);
-    rect(20, 300, width - 40, 160, 10);
-    fill(255);
-    text(txtInicio[1], 40, 330, width - 80);
-botonparacontinuar (520, 20);
-   
-     } else if (estadoActual === 'pan3') {
-    image(sec2, 0, 0, width, height);
-    fill(0, 0, 0, 150);
-    rect(20, 300, width - 40, 160, 10);
-    fill(255);
-    text(txtInicio[2], 40, 340, width - 80);
-botonparacontinuar (520, 20);
-   
-
+    drawPan2();
+  } else if (estadoActual === 'pan3') {
+    drawPan3();
   } else if (estadoActual === 'pan4') {
-    image(sec2, 0, 0, width, height);
-    fill(0, 0, 0, 150);
-    rect(20, 300, width - 40, 160, 10);
-    fill(255);
-    text(txtInicio[3], 40, 340, width - 80);
-
-    botoncito(80, 400, 190, 50, "ir al spa");
-    botoncito(340, 400, 240, 50, "Adelantar las lecciones");
-
-  } else if (estadoActual === 'Trixie1') {
-    image(secTrixie1, 0, 0, width, height);
-    fill(0, 0, 0, 150);
-    rect(20, 300, width - 40, 160, 10);
-    fill(255);
-    text(txtTrixie[0],40, 380, width - 80);
-    botonparacontinuar (520, 20);
-
-    } else if (estadoActual === 'Trixie2') {
-    image(secTrixie1, 0, 0, width, height);
-    fill(0, 0, 0, 150);
-    rect(20, 300, width - 40, 160, 10);
-    fill(255);
-    text(txtTrixie[1],40, 380, width - 80);
-    botonparacontinuar (520, 20);
-
-     } else if (estadoActual === 'Trixie3') {
-    image(secTrixie2, 0, 0, width, height);
-    fill(0, 0, 0, 150);
-    rect(20, 300, width - 40, 160, 10);
-    fill(255);
-    text(txtTrixie[2],40, 380, width - 80);
-    botonparacontinuar (520, 20);
-
-     } else if (estadoActual === 'Trixie4') {
-    image(secTrixie2, 0, 0, width, height);
-    fill(0, 0, 0, 150);
-    rect(20, 300, width - 40, 160, 10);
-    fill(255);
-    text(txtTrixie[3],40, 380, width - 80);
-    botonparacontinuar (520, 20);
-
-    } else if (estadoActual === 'Trixie5') {
-    image(secTrixie2, 0, 0, width, height);
-    fill(0, 0, 0, 150);
-    rect(20, 270, width - 40, 200, 10);
-    fill(255);
-    text(txtTrixie[4],40, 370, width - 80);
-    botonparacontinuar (520, 20);
-
-    } else if (estadoActual === 'Trixie6') {
-    image(secTrixie3, 0, 0, width, height);
-    fill(0, 0, 0, 150);
-    rect(20, 300, width - 40, 160, 10);
-    fill(255);
-    text(txtTrixie[5],40, 380, width - 80);
-    botonparacontinuar (520, 20);
-
-    } else if (estadoActual === 'Trixie7') {
-    image(secTrixie3, 0, 0, width, height);
-    fill(0, 0, 0, 150);
-    rect(20, 270, width - 40, 200, 10);
-    fill(255);
-    text(txtTrixie[6],40, 370, width - 80);
-    botonparacontinuar (520, 20);
-
-    } else if (estadoActual === 'Trixie8') {
-    image(secTrixie3, 0, 0, width, height);
-    fill(0, 0, 0, 150);
-    rect(20, 270, width - 40, 200, 10);
-    fill(255);
-    text(txtTrixie[7],40, 370, width - 80);
-    botonparacontinuar (520, 20);
-
- } else if (estadoActual === 'Trixie9') {
-    image(secTrixie4, 0, 0, width, height);
-    stroke(10)
-    fill(0, 0, 0, 150);
-    rect(20, 15, width - 40, 210, 10);
-    fill(255);
-    text(txtTrixie[9],40, 120, width - 80);
-
-    botoncito(80, 400, 220, 50, 'Si');
-    botoncito(340, 400, 220, 50, "No");
-
-} else if (estadoActual === 'Trixie10') {
-    image(secCañon, 0, 0, width, height);
-    fill(0, 0, 0, 150);
-    rect(20, 270, width - 40, 200, 10);
-    fill(255);
-    text(txtTrixie[10],40, 370, width - 80);
-    botonparacontinuar (520, 20);
-
-} else if (estadoActual === 'Trixie11') {
-    image(secCañon, 0, 0, width, height);
-    fill(0, 0, 0, 150);
-    rect(20, 270, width - 40, 200, 10);
-    fill(255);
-    text(txtTrixie[10],40, 370, width - 80);
-    botonparacontinuar (520, 20);
-
-    } else if (estadoActual === 'Trixie12') {
-    image(secQuime, 0, 0, width, height);
-    botonparacontinuar (520, 20);
-
-    } else if (estadoActual === 'Trixie13') {
-    image(secQuime, 0, 0, width, height);
-    botonparacontinuar (520, 20);
-
-     } else if (estadoActual === 'Trixie14') {
-    image(secPubl, 0, 0, width, height);
-    botonparacontinuar (520, 20);
-
-    } else if (estadoActual === 'Trixie15') {
-    image(secPubl, 0, 0, width, height);
-     botoncito (220, 400,200,50,"Volver al menu")
-
-     } else if (estadoActual === 'Trixie16') {
-    image(secTp, 0, 0, width, height);
-    botonparacontinuar (520, 20);
-
-     } else if (estadoActual === 'Trixie17') {
-    image(FinalTrixie, 0, 0, width, height);
-    fill(0, 0, 0, 150);
-    rect(20, 20, width - 40, 100, 10);
-    fill(255);
-    text(txtTrixie[11],40, 70, width - 80);
-    botoncito (220, 400,200,50,"Volver al menu")
-   
-
+    drawPan4();
   } else if (estadoActual === 'Mains1') {
-    // Reutilizamos la imagen de inicio para este final
-    image(sec2, 0, 0, width, height);
-    fill(0, 0, 0, 150);
-    rect(20, 200, width - 40, 100, 10);
-    fill(255);
-    text("¡Debería de pedirle ayuda a mis amigas!\nEllas sabrán como ayudarme. Hm...\n¿pero a cuales les pido ayuda?", width / 2, 250);
-botoncito(40, 390, 150, 60, "Twilight y\nRarity");
-    botoncito(240, 390, 150, 60, "Pinkie Pie y\nFluttershy");
-botoncito (440, 390, 150, 60,"Rainbow y\nApplejack")
+    drawMains1();
+  } else if (estadoActual.startsWith('Trixie')) {
+    drawTrixiePath();
+  } else if (estadoActual.startsWith('Flutter')) {
+    drawFlutterPath();
+  } else if (estadoActual.startsWith('Apple')) {
+    drawApplePath();
+  } else if (estadoActual.startsWith('Twi') || estadoActual.startsWith('Rar') || estadoActual.startsWith('FinalTwi')) {
+    drawTwiPath();
   }
-
-else if (estadoActual === 'Twi1') {
-    image(biblioteca, 0, 0, width, height);
-    fill(0, 0, 0, 150);
-    rect(20, 300, width - 40, 160, 10);
-    fill(255);
-    text(txtTwi[1], 40, 380, width - 80);
-botonparacontinuar (520, 20);
-}
-else if (estadoActual === 'Twi2') {
-    image(biblioteca, 0, 0, width, height);
-    fill(0, 0, 0, 150);
-    rect(20, 300, width - 40, 160, 10);
-    fill(255);
-    text(txtTwi[2], 40, 380, width - 80);
-botonparacontinuar (520, 20);
-}
-else if (estadoActual === 'Twi3') {
-    image(biblioteca, 0, 0, width, height);
-    fill(0, 0, 0, 150);
-    rect(20, 300, width - 40, 160, 10);
-    fill(255);
-    text(txtTwi[3], 40, 380, width - 80);
-botonparacontinuar (520, 20);
-}
 }
 
-// 4. MANEJO DE INTERACCIONES
 function mousePressed() {
   if (estadoActual === 'pan1') {
-    if (overMouse(520, 20, flecha.width, flecha.height)) {
-      estadoActual = 'pan2';
-    }
+    mousePan1();
   } else if (estadoActual === 'pan2') {
-    if (overMouse(520, 20, flecha.width, flecha.height)) {
-      estadoActual = 'pan3';
-    }
-    } else if (estadoActual === 'pan3') {
-    if (overMouse(520, 20, flecha.width, flecha.height)) {
-      estadoActual = 'pan4';
-    }
+    mousePan2();
+  } else if (estadoActual === 'pan3') {
+    mousePan3();
   } else if (estadoActual === 'pan4') {
-    if (overMouse(80, 400, 190, 50)) {
-      estadoActual = 'Trixie1';
-    } else if (overMouse(340, 400, 240, 50)) {
-      estadoActual = 'Mains1';
-    }
-  }else if (estadoActual === 'Mains1') {
-    if (overMouse(40, 390, 150, 60)) {
-      estadoActual = 'Twi1';
-    } else if (overMouse(240, 390, 150, 60)) {
-      estadoActual = 'Flutter1';
-    } else if (overMouse(440, 390, 150, 60)) {
-      estadoActual = 'Rainbow1'; 
-    }
-  } else if (estadoActual === 'Trixie1') {
-    if (overMouse(520, 20, flecha.width, flecha.height)) {
-      estadoActual = 'Trixie2';
-    }
-}else if (estadoActual === 'Trixie2') {
-    if (overMouse(520, 20, flecha.width, flecha.height)) {
-      estadoActual = 'Trixie3';
-    }
-}else if (estadoActual === 'Trixie3') {
-    if (overMouse(520, 20, flecha.width, flecha.height)) {
-      estadoActual = 'Trixie4';
-    }
-  }else if (estadoActual === 'Trixie4') {
-    if (overMouse(520, 20, flecha.width, flecha.height)) {
-      estadoActual = 'Trixie5';
-    }
-  }else if (estadoActual === 'Trixie5') {
-    if (overMouse(520, 20, flecha.width, flecha.height)) {
-      estadoActual = 'Trixie6';
-    }
-  } else if (estadoActual === 'Trixie6') {
-    if (overMouse(520, 20, flecha.width, flecha.height)) {
-      estadoActual = 'Trixie7';
-    }
-  }  else if (estadoActual === 'Trixie7') {
-    if (overMouse(520, 20, flecha.width, flecha.height)) {
-      estadoActual = 'Trixie8';
-    }
-  }  else if (estadoActual === 'Trixie8') {
-    if (overMouse(520, 20, flecha.width, flecha.height)) {
-      estadoActual = 'Trixie9';
-    }
-  } else if (estadoActual === 'Trixie9') {
-    if (overMouse(80, 400, 220, 50)) {
-      estadoActual = 'Trixie10';
-    } else if (overMouse(340, 400, 220, 50)) {
-      estadoActual = 'Trixie11';
-    }
-}  else if (estadoActual === 'Trixie10') {
-    if (overMouse(520, 20, flecha.width, flecha.height)) {
-      estadoActual = 'Trixie12';
-    }
-}else if (estadoActual === 'Trixie12') {
-    if (overMouse(520, 20, flecha.width, flecha.height)) {
-      estadoActual = 'Trixie14';
-    }
-}else if (estadoActual === 'Trixie14') {
-    if (overMouse(520, 20, flecha.width, flecha.height)) {
-      estadoActual = 'Trixie16';
-    }
-  }else if (estadoActual === 'Trixie16') {
-    if (overMouse(520, 20, flecha.width, flecha.height)) {
-      estadoActual = 'Trixie17';
-    }
-  } else if (estadoActual === 'Trixie11') {
-    if (overMouse(520, 20, flecha.width, flecha.height)) {
-      estadoActual = 'Trixie13';
-    }
-}  else if (estadoActual === 'Trixie13') {
-    if (overMouse(520, 20, flecha.width, flecha.height)) {
-      estadoActual = 'Trixie15';
-    }
-}
+    mousePan4();
+  } else if (estadoActual === 'Mains1') {
+    mouseMains1();
+  } else if (estadoActual.startsWith('Trixie')) {
+    mouseTrixiePath();
+  } else if (estadoActual.startsWith('Flutter')) {
+    mouseFlutterPath();
+  } else if (estadoActual.startsWith('Apple')) {
+    mouseApplePath();
+  } else if (estadoActual.startsWith('Twi') || estadoActual.startsWith('Rar') || estadoActual.startsWith('FinalTwi')) {
+    mouseTwiPath();
+  }
 }
 
 function botoncito(posX, posY, tamX, tamY, textoB) {
@@ -346,26 +110,411 @@ function botoncito(posX, posY, tamX, tamY, textoB) {
   rect(posX, posY, tamX, tamY, 10);
   noStroke();
   fill(255);
-  textAlign(CENTER, CENTER);
   text(textoB, posX + tamX / 2, posY + tamY / 2);
 }
 
 function overMouse(posX, posY, tamX, tamY) {
   return mouseX > posX && mouseX < posX + tamX && mouseY > posY && mouseY < posY + tamY;
 }
-  function botonparacontinuar (posX, posY) {
-       tamX = flecha.width;
-     tamY = flecha.height;
+
+function botonparacontinuar(posX, posY) {
+  const tamX = flecha.width;
+  const tamY = flecha.height;
   if (overMouse(posX, posY, tamX, tamY)) {
- image(fleActiva, posX, posY);
-     } else {
-          image(flecha, posX, posY);
-         }
-       }
+    image(fleActiva, posX, posY);
+  } else {
+    image(flecha, posX, posY);
+  }
+}
 
-function keypressed () {                                       
-      if (key === 'q' || key === 'Q') {                                                                      
-       estadoActual === 'Trixie5';                                                                                
-   }                                                                                                       
- }                              
+function dibujarTexto(contenido, x, y, w, h) {
+  fill(0, 0, 0, 150);
+  rect(x, y, w, h, 10);
+  fill(255);
+text(contenido, x + 5 / 2, y + h / 2, width - 40);
+}
 
+function drawPan1() {
+  image(imagenes[0], 0, 0, width, height);
+  dibujarTexto(textos[0][0], 20, 80, 600, 320);
+  botonparacontinuar(520, 20);
+}
+function mousePan1() {
+  if (overMouse(520, 20, flecha.width, flecha.height)) {
+    estadoActual = 'pan2';
+    if (!isAmbientePlaying) {
+      ambiente.loop();
+      isAmbientePlaying = true;
+    }
+  }
+}
+
+function drawPan2() {
+  image(imagenes[1], 0, 0, width, height);
+  dibujarTexto(textos[0][1], 20, 300, 600, 160);
+  botonparacontinuar(520, 20);
+}
+function mousePan2() {
+  if (overMouse(520, 20, flecha.width, flecha.height)) estadoActual = 'pan3';
+}
+
+function drawPan3() {
+  image(imagenes[1], 0, 0, width, height);
+  dibujarTexto(textos[0][2], 20, 300, 600, 160);
+  botonparacontinuar(520, 20);
+}
+function mousePan3() {
+  if (overMouse(520, 20, flecha.width, flecha.height)) estadoActual = 'pan4';
+}
+
+function drawPan4() {
+  image(imagenes[1], 0, 0, width, height);
+  dibujarTexto(textos[0][3], 20, 300, 600, 160);
+  botoncito(80, 400, 190, 50, "ir al spa");
+  botoncito(340, 400, 240, 50, "Adelantar las lecciones");
+}
+function mousePan4() {
+  if (overMouse(80, 400, 190, 50)) estadoActual = 'Trixie1';
+  if (overMouse(340, 400, 240, 50)) estadoActual = 'Mains1';
+}
+
+function drawMains1() {
+  image(imagenes[1], 0, 0, width, height);
+  dibujarTexto("¡Debería de pedirle ayuda a mis amigas!\nEllas sabrán como ayudarme. Hm...\n¿pero a cuales les pido ayuda?", 20, 200, 600, 100);
+  botoncito(40, 390, 150, 60, "Twilight y\nRarity");
+  botoncito(240, 390, 150, 60, "Pinkie Pie y\nFluttershy");
+  botoncito(440, 390, 150, 60, "Rainbow y\nApplejack");
+}
+function mouseMains1() {
+  if (overMouse(40, 390, 150, 60)) estadoActual = 'Twi1';
+  if (overMouse(240, 390, 150, 60)) estadoActual = 'Flutter1';
+  if (overMouse(440, 390, 150, 60)) estadoActual = 'Apple1';
+}
+
+
+// Camino Trixie
+
+function drawTrixiePath() {
+  if (estadoActual === 'Trixie1') {
+    image(imagenes[2], 0, 0, width, height);
+    dibujarTexto(textos[1][0], 20, 300, 600, 160);
+    botonparacontinuar(520, 20);
+  } else if (estadoActual === 'Trixie2') {
+    image(imagenes[2], 0, 0, width, height);
+    dibujarTexto(textos[1][1], 20, 300, 600, 160);
+    botonparacontinuar(520, 20);
+  } else if (estadoActual === 'Trixie3') {
+    image(imagenes[3], 0, 0, width, height);
+    dibujarTexto(textos[1][2], 20, 300, 600, 160);
+    botonparacontinuar(520, 20);
+  } else if (estadoActual === 'Trixie4') {
+    image(imagenes[3], 0, 0, width, height);
+    dibujarTexto(textos[1][3], 20, 300, 600, 160);
+    botonparacontinuar(520, 20);
+  } else if (estadoActual === 'Trixie5') {
+    image(imagenes[3], 0, 0, width, height);
+    dibujarTexto(textos[1][4], 20, 270, 600, 200);
+    botonparacontinuar(520, 20);
+  } else if (estadoActual === 'Trixie6') {
+    image(imagenes[4], 0, 0, width, height);
+    dibujarTexto(textos[1][5], 20, 300, 600, 160);
+    botonparacontinuar(520, 20);
+  } else if (estadoActual === 'Trixie7') {
+    image(imagenes[4], 0, 0, width, height);
+    dibujarTexto(textos[1][6], 20, 270, 600, 200);
+    botonparacontinuar(520, 20);
+  } else if (estadoActual === 'Trixie8') {
+    image(imagenes[4], 0, 0, width, height);
+    dibujarTexto(textos[1][7], 20, 270, 600, 200);
+    botonparacontinuar(520, 20);
+  } else if (estadoActual === 'Trixie9') {
+    image(imagenes[5], 0, 0, width, height);
+    dibujarTexto(textos[1][9], 20, 15, 600, 210);
+    botoncito(80, 400, 220, 50, 'Si');
+    botoncito(340, 400, 220, 50, "No");
+  } else if (estadoActual === 'Trixie10' || estadoActual === 'Trixie11') {
+    image(imagenes[6], 0, 0, width, height);
+    dibujarTexto(textos[1][10], 20, 270, 600, 200);
+    botonparacontinuar(520, 20);
+  } else if (estadoActual === 'Trixie12' || estadoActual === 'Trixie13') {
+    image(imagenes[8], 0, 0, width, height);
+    botonparacontinuar(520, 20);
+  } else if (estadoActual === 'Trixie14') {
+    image(imagenes[7], 0, 0, width, height);
+    botonparacontinuar(520, 20);
+  } else if (estadoActual === 'Trixie15') {
+    image(imagenes[7], 0, 0, width, height);
+    botoncito(220, 400, 200, 50, "Volver al menu");
+  } else if (estadoActual === 'Trixie16') {
+    image(imagenes[9], 0, 0, width, height);
+    botonparacontinuar(520, 20);
+  } else if (estadoActual === 'Trixie17') {
+    image(imagenes[10], 0, 0, width, height);
+    dibujarTexto(textos[1][11], 20, 20, 600, 100);
+    botoncito(220, 400, 200, 50, "Volver al menu");
+  }
+}
+
+function mouseTrixiePath() {
+  let esContinuar = overMouse(520, 20, flecha.width, flecha.height);
+  if (esContinuar) {
+    if (estadoActual === 'Trixie1') estadoActual = 'Trixie2';
+    else if (estadoActual === 'Trixie2') estadoActual = 'Trixie3';
+    else if (estadoActual === 'Trixie3') estadoActual = 'Trixie4';
+    else if (estadoActual === 'Trixie4') estadoActual = 'Trixie5';
+    else if (estadoActual === 'Trixie5') estadoActual = 'Trixie6';
+    else if (estadoActual === 'Trixie6') estadoActual = 'Trixie7';
+    else if (estadoActual === 'Trixie7') estadoActual = 'Trixie8';
+    else if (estadoActual === 'Trixie8') estadoActual = 'Trixie9';
+    else if (estadoActual === 'Trixie10') estadoActual = 'Trixie12';
+    else if (estadoActual === 'Trixie11') estadoActual = 'Trixie13';
+    else if (estadoActual === 'Trixie12') estadoActual = 'Trixie14';
+    else if (estadoActual === 'Trixie13') estadoActual = 'Trixie15';
+    else if (estadoActual === 'Trixie14') estadoActual = 'Trixie16';
+    else if (estadoActual === 'Trixie16') estadoActual = 'Trixie17';
+  } else if (estadoActual === 'Trixie9') {
+    if (overMouse(80, 400, 220, 50)) estadoActual = 'Trixie10';
+    if (overMouse(340, 400, 220, 50)) estadoActual = 'Trixie11';
+  } else if (estadoActual === 'Trixie15' || estadoActual === 'Trixie17') {
+    if (overMouse(220, 400, 200, 50)) {
+      estadoActual = 'pan1';
+      ambiente.stop();
+      isAmbientePlaying = false;
+    }
+  }
+}
+
+
+// Camino Flutter
+
+function drawFlutterPath() {
+  image(imagenes[12], 0, 0, width, height);
+  if (estadoActual === 'Flutter1') {
+    dibujarTexto(textos[3][0], 20, 300, 600, 160);
+    botonparacontinuar(520, 20);
+  } else if (estadoActual === 'Flutter2') {
+    dibujarTexto(textos[3][1], 20, 300, 600, 160);
+    botonparacontinuar(520, 20);
+  } else if (estadoActual === 'Flutter3') {
+    dibujarTexto(textos[3][2], 20, 180, 600, 120);
+    botoncito(80, 400, 220, 50, 'Es demasiado lenta');
+    botoncito(340, 400, 220, 50, "Logra atraparlos");
+  } else if (estadoActual === 'FlutterBE1') {
+    dibujarTexto(textos[3][3], 20, 180, 600, 120);
+    botoncito(80, 400, 220, 50, 'Si, pobre desgraciada');
+    botoncito(340, 400, 220, 50, "NO");
+  } else if (estadoActual === 'FlutterBE2') {
+    dibujarTexto(textos[3][4], 20, 20, 600, 100);
+    botoncito(220, 400, 200, 50, "Volver al menu");
+  } else if (estadoActual === 'FlutterGE1') {
+    dibujarTexto(textos[3][5], 20, 300, 600, 160);
+    botonparacontinuar(520, 20);
+  } else if (estadoActual === 'FlutterGE2') {
+    dibujarTexto(textos[3][6], 20, 300, 600, 160);
+    botonparacontinuar(520, 20);
+  } else if (estadoActual === 'FlutterGE3') {
+    dibujarTexto(textos[3][7], 20, 20, 600, 100);
+    botoncito(220, 400, 200, 50, "Volver al menu");
+  }
+}
+
+function mouseFlutterPath() {
+  let esContinuar = overMouse(520, 20, flecha.width, flecha.height);
+  if (esContinuar) {
+    if (estadoActual === 'Flutter1') estadoActual = 'Flutter2';
+    else if (estadoActual === 'Flutter2') {
+      estadoActual = 'Flutter3';
+      ambiente.stop();
+      isAmbientePlaying = false;
+      explosion.play();
+    }
+    else if (estadoActual === 'FlutterGE1') estadoActual = 'FlutterGE2';
+    else if (estadoActual === 'FlutterGE2') estadoActual = 'FlutterGE3';
+  } else if (estadoActual === 'Flutter3') {
+    if (overMouse(80, 400, 220, 50)) estadoActual = 'FlutterBE1';
+    if (overMouse(340, 400, 220, 50)) estadoActual = 'FlutterGE1';
+    if (!isAmbientePlaying) {
+      ambiente.loop();
+      isAmbientePlaying = true;
+    }
+  } else if (estadoActual === 'FlutterBE1') {
+    if (overMouse(80, 400, 220, 50)) estadoActual = 'FlutterGE1';
+    if (overMouse(340, 400, 220, 50)) estadoActual = 'FlutterBE2';
+  } else if (estadoActual === 'FlutterBE2' || estadoActual === 'FlutterGE3') {
+    if (overMouse(220, 400, 200, 50)) {
+      estadoActual = 'pan1';
+      ambiente.stop();
+      isAmbientePlaying = false;
+    }
+  }
+}
+
+
+// Camino apple
+
+function drawApplePath() {
+  image(imagenes[13], 0, 0, width, height);
+  if (estadoActual === 'Apple1') {
+    dibujarTexto(textos[4][0], 20, 280, 600, 180);
+    botonparacontinuar(520, 20);
+  } else if (estadoActual === 'Apple2') {
+    dibujarTexto(textos[4][1], 20, 180, 600, 120);
+    botoncito(80, 400, 220, 50, 'Se tropieza');
+    botoncito(340, 400, 220, 60, "Si, a pesar de\nsu velocidad");
+  } else if (estadoActual === 'AppleBE1') {
+    dibujarTexto(textos[4][2], 20, 180, 600, 120);
+    botoncito(80, 400, 220, 50, 'Que siga intentándolo');
+    botoncito(340, 400, 220, 50, "Que se vuelva a casa");
+  } else if (estadoActual === 'AppleBE2') {
+    dibujarTexto(textos[4][3], 20, 20, 600, 120);
+    botoncito(220, 400, 200, 50, "Volver al menu");
+  } else if (estadoActual === 'AppleGE1') {
+    dibujarTexto(textos[4][4], 20, 300, 600, 160);
+    botonparacontinuar(520, 20);
+  } else if (estadoActual === 'AppleGE2') {
+    dibujarTexto(textos[4][5], 20, 20, 600, 150);
+    botoncito(220, 400, 200, 50, "Volver al menu");
+  }
+}
+
+function mouseApplePath() {
+  let esContinuar = overMouse(520, 20, flecha.width, flecha.height);
+  if (esContinuar) {
+    if (estadoActual === 'Apple1') estadoActual = 'Apple2';
+    else if (estadoActual === 'AppleGE1') estadoActual = 'AppleGE2';
+  } else if (estadoActual === 'Apple2') {
+    if (overMouse(80, 400, 220, 50)) estadoActual = 'AppleBE1';
+    if (overMouse(340, 400, 220, 60)) estadoActual = 'AppleGE1';
+  } else if (estadoActual === 'AppleBE1') {
+    if (overMouse(80, 400, 220, 50)) estadoActual = 'AppleGE1';
+    if (overMouse(340, 400, 220, 50)) estadoActual = 'AppleBE2';
+  } else if (estadoActual === 'AppleBE2' || estadoActual === 'AppleGE2') {
+    if (overMouse(220, 400, 200, 50)) {
+      estadoActual = 'pan1';
+      ambiente.stop();
+      isAmbientePlaying = false;
+    }
+  }
+}
+
+
+// camino twi
+
+function drawTwiPath() {
+  // Lógica de cambio de imagen
+  if (estadoActual === 'Twi4') {
+    image(imagenes[1], 0, 0, width, height);
+  } else if (estadoActual === 'Twi5') {
+    image(imagenes[14], 0, 0, width, height);
+  } else if (estadoActual === 'TwiBD1' || estadoActual === 'TwiBD2') {
+    image(imagenes[15], 0, 0, width, height);
+  } else if (estadoActual === 'TwiTE1') {
+    image(imagenes[16], 0, 0, width, height);
+  } else if (estadoActual === 'TwiTE2') {
+    image(imagenes[17], 0, 0, width, height);
+  } else if (estadoActual === 'TwiTE3') {
+    image(imagenes[18], 0, 0, width, height);
+  } else if (estadoActual === 'FinalTwi') {
+    image(imagenes[19], 0, 0, width, height);
+  } else {
+    image(imagenes[11], 0, 0, width, height);
+  }
+
+  // Lógica de texto y botones
+  if (estadoActual === 'Twi1') {
+    dibujarTexto(textos[2][1], 20, 300, 600, 160);
+    botonparacontinuar(520, 20);
+  } else if (estadoActual === 'Twi2') {
+    dibujarTexto(textos[2][2], 20, 300, 600, 160);
+    botonparacontinuar(520, 20);
+  } else if (estadoActual === 'Twi3') {
+    dibujarTexto(textos[2][3], 20, 250, 600, 210);
+    botonparacontinuar(520, 20);
+  } else if (estadoActual === 'Twi4') {
+    dibujarTexto("¿Qué elegira Starlight?", 20, 300, 600, 160);
+    botoncito(80, 400, 200, 50, "Hechizos de costura");
+    botoncito(340, 400, 240, 50, "Hechizos antiguos");
+  } else if (estadoActual === 'Rar1') {
+    dibujarTexto(textos[2][4], 20, 300, 600, 160);
+    botonparacontinuar(520, 20);
+  } else if (estadoActual === 'Rar2') {
+    dibujarTexto(textos[2][5], 20, 300, 600, 160);
+    botonparacontinuar(520, 20);
+  } else if (estadoActual === 'Twi5') {
+    dibujarTexto(textos[2][6], 20, 15, 600, 330);
+    botoncito(80, 400, 200, 50, 'No llega a tiempo');
+    botoncito(340, 400, 240, 50, "Ella logra conseguirlos");
+  } else if (estadoActual === 'TwiBD1') {
+    dibujarTexto(textos[2][7], 20, 300, 600, 160);
+    botoncito(80, 400, 220, 50, 'Sigue intentandolo');
+    botoncito(340, 380, 220, 70, "El cansancio se\napodera de Starlight");
+  } else if (estadoActual === 'TwiBD2') {
+    dibujarTexto(textos[2][8], 20, 20, 600, 140);
+    botoncito(220, 400, 200, 50, "Volver al menu");
+  } else if (estadoActual === 'TwiTE1') {
+    dibujarTexto(textos[2][9], 20, 290, 600, 180);
+    botonparacontinuar(520, 20);
+  } else if (estadoActual === 'TwiTE2') {
+    dibujarTexto(textos[2][10], 20, 75, 600, 340);
+    botonparacontinuar(520, 20);
+  } else if (estadoActual === 'TwiTE3') {
+    dibujarTexto(textos[2][11], 20, 300, 600, 160);
+    botonparacontinuar(520, 20);
+  } else if (estadoActual === 'FinalTwi') {
+    dibujarTexto(textos[2][12], 20, 20, 600, 100);
+    botoncito(220, 400, 200, 50, "Volver al menu");
+  }
+}
+
+function mouseTwiPath() {
+  let esContinuar = overMouse(520, 20, flecha.width, flecha.height);
+  if (esContinuar) {
+    if (estadoActual === 'Twi1') estadoActual = 'Twi2';
+    else if (estadoActual === 'Twi2') estadoActual = 'Twi3';
+    else if (estadoActual === 'Twi3') estadoActual = 'Twi4';
+    else if (estadoActual === 'Rar1') estadoActual = 'Rar2';
+    else if (estadoActual === 'Rar2') {
+      estadoActual = 'Twi5';
+      ambiente.stop();
+      isAmbientePlaying = false;
+      magia.play();
+      tension.loop();
+    }
+    else if (estadoActual === 'TwiTE1') estadoActual = 'TwiTE2';
+    else if (estadoActual === 'TwiTE2') estadoActual = 'TwiTE3';
+    else if (estadoActual === 'TwiTE3') estadoActual = 'FinalTwi';
+  } else if (estadoActual === 'Twi4') {
+    if (overMouse(80, 400, 200, 50)) estadoActual = 'Rar1';
+    if (overMouse(340, 400, 240, 50)) {
+      estadoActual = 'Twi5';
+      ambiente.stop();
+      isAmbientePlaying = false;
+      magia.play();
+      tension.loop();
+    }
+  } else if (estadoActual === 'Twi5') {
+    if (overMouse(80, 400, 200, 50)) estadoActual = 'TwiBD1';
+    if (overMouse(340, 400, 240, 50)) estadoActual = 'TwiTE1';
+  } else if (estadoActual === 'TwiBD1') {
+    if (overMouse(80, 400, 220, 50)) estadoActual = 'TwiTE1';
+    if (overMouse(340, 380, 220, 70)) estadoActual = 'TwiBD2';
+  } else if (estadoActual === 'TwiBD2' || estadoActual === 'FinalTwi') {
+    if (overMouse(220, 400, 200, 50)) {
+      estadoActual = 'pan1';
+      tension.stop();
+    }
+  }
+}
+
+//atajos
+function keyPressed() {
+  if (key === 'q' || key === 'Q') {
+    estadoActual = 'Trixie5';
+  }
+  if (key === 'o' || key === 'o') {
+    estadoActual = 'Twi5';
+  }
+  if (key === 'T' || key === 't') {
+    estadoActual = 'Mains1';
+  }
+}
