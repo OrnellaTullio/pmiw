@@ -1,3 +1,4 @@
+//https://youtu.be/Vuj8oB58CfE
 let estadoActual = 'pan1';
 let flecha, fleActiva;
 let imagenes = [];
